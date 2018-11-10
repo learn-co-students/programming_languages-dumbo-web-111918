@@ -1,17 +1,14 @@
 def reformat_languages(languages)
   new_hash = {}
-  languages[:oo].each do |name, type|
-    new_hash[name] = type 
-    new_hash[name][:style] = [:oo] 
-  end  
-    languages[:functional].each do |name, type|
-      if name == :javascript 
-        new_hash[name] = type
-        new_hash[name][:style] = [:oo, :functional]
+  languages.each do |type, info|
+    info.each do |name, stats|
+      if new_hash[name]
+        new_hash[name][:style] << type
       else
-      new_hash[name] = type 
-      new_hash[name][:style] = [:functional] 
+        new_hash[name] = stats
+        new_hash[name][:style] = [type]
       end
-  end  
-  return new_hash
+    end
+  end
+  new_hash
 end
